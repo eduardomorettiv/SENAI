@@ -1,4 +1,4 @@
-```
+```cpp
 
 //comando pra colocar caracteres especiais
 #include<windows.h>
