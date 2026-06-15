@@ -14,3 +14,5 @@ int main() {
     printf("Olá");
 }
 ```
+Para isso você terá que usar o embarcadero DEV C++:
+https://www.embarcadero.com/br/free-tools/dev-cpp
