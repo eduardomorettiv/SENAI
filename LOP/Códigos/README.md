@@ -10,7 +10,7 @@ rand()%20+1; <----cria um numero aleatório entre 1 e 20
 
 ```
 
-```
+```cpp
 #include <stdio.h>
 #include <windows.h>
 
