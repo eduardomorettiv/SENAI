@@ -29,7 +29,7 @@ void main(){
 	struct Cliente clientes[MAX_LINHAS];
 	FILE *arquivo = fopen("clientes.csv","r");
 	if(arquivo == NULL){
-		printf("Arquivo não encontrado.\n");
+		printf("Você não tem o arquivo .\n");
 		getch();
 		return 0;
 	}
@@ -51,19 +51,27 @@ void main(){
 	double media = 0;
 	int m=0;
 	int f=0;
+	float mediaM, mediaF;
 	printf("Nome\tIdade\tSexo\n");
 	for(int i = 0; i < qtdLinhas - 1; i++){
 		printf("%s\t%d\t%s\n",clientes[i].nome, clientes[i].idade, clientes[i].sexo);
 		media += clientes[i].idade;
 		if(clientes[i].sexo == 'M'){
 			m++;
+			mediaM += clientes[i].idade;
 		} else{
 			f++;
+			mediaF += clientes[i].idade;
 		}
 	}
+	mediaM = mediaM / m;
+	mediaF = mediaF / f;
 	media = media / (float)(qtdLinhas - 1);
 	printf("\nForam analizados %d clientes\n", qtdLinhas - 1);
 	printf("A média de idade dos clientes é %.1f anos\n", media);
+	printf("Foram analizadas %d pessoas do sexo masculino e %d do sexo feminino\n",  m, f);
+	printf("A média de idade das pessoas do sexo masculino é %.1f anos\n", mediaM);
+	printf("A média de idade das pessoas do sexo feminino é %.1f anos\n", mediaF);
 	getch();
 }
 ```
