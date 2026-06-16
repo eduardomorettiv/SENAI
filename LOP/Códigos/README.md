@@ -27,7 +27,7 @@ void main(){
 	SetConsoleOutputCP(CP_UTF8);
 	int qtdLinhas = 0;
 	struct Cliente clientes[MAX_LINHAS];
-	FILE *arquivo = fopen("clientes.csv","r");
+	FILE *arquivo = fopen("clientes.txt","r");
 	if(arquivo == NULL){
 		printf("Você não tem o arquivo .\n");
 		getch();
