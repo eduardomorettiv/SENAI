@@ -1,2 +1,2 @@
-* O que é LIMA?
+*O que é LIMA?
 Linguagem de Marcação
