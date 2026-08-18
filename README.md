@@ -2,7 +2,7 @@
 Atividades do senai
 
 ## 1º Semestre
-ARI (Arquitetura de redes com IOT)
+1-ARI (Arquitetura de redes com IOT)
 
 LOP (lógica de programação)
 
@@ -15,6 +15,6 @@ LIMA (Linguagem de marcação)
 
 PBE (Programação Back End)
 
-BCD (Banco de Dados)
+2-BDA (Banco de Dados)
 
 PSOF (Projeto de Software)
