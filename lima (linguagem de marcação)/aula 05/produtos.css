@@ -1,0 +1,30 @@
+body{
+    height: 100vh;
+    display: flex;
+    flex-direction: row;
+    gap: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+}
+
+div{
+    height: auto;
+    width: auto;
+    border: 1px solid #000;
+    border-radius: 10px;
+    display: flex;
+    flex-direction: column;
+    padding: 10px;
+}
+img{
+    height: 100px;
+    width: 100px;
+    align-self: center;
+    border-radius: 5px;
+}
+button{
+    background-color: blue;
+    color:white;
+}

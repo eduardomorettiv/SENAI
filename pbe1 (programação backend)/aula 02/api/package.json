@@ -1,0 +1,16 @@
+{
+  "name": "primeiro_backend",
+  "version": "1.0.0",
+  "description": "primeira api da aula de backend",
+  "license": "ISC",
+  "author": "Eduardo Moretti",
+  "type": "commonjs",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "dependencies": {
+    "cors": "^2.8.6",
+    "express": "^5.2.1"
+  }
+}

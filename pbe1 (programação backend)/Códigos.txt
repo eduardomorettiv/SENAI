@@ -1,0 +1,7 @@
+== -> Igual
+!= -> Diferente
+
+=== -> exatamente igual
+!== -> exatamente diferente
+
+no terminal: npm run dev
