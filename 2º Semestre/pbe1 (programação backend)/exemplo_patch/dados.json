@@ -1,0 +1,20 @@
+[
+    {
+        "id": 1,
+        "nome": "Aura Dias",
+        "telefone": "(11) 1111-1111",
+        "email": "fulano@gmail.com"
+    },
+    {
+        "id": 2,
+        "nome": "Siquis Sevenson da silva",
+        "telefone": "(11) 1111-2222",
+        "email": "siquis.sevenson@gmail.com"
+    },
+    {
+        "id": 3,
+        "nome": "Osmar Motta",
+        "telefone": "(11) 1111-3333",
+        "email": "osmar@gmail.com"
+    }
+]

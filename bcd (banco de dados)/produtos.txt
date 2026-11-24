@@ -1,3 +1,0 @@
-nome: detergente
-preço: 67.67
-quantidade: 67
