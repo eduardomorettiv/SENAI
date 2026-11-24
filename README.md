@@ -1,5 +1,5 @@
 <center>
-![senai_logo](senai_logo.png)
+<img src="senai_logo.png" alt="senai_logo">
 <center>
 
 ## Descrição
