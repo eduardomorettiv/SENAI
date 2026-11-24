@@ -16,6 +16,7 @@ CREATE TABLE IF NOT EXISTS discos (
 
 -- Inserção de dados de teste (Carga inicial)
 INSERT INTO discos (album, artista, genero, imagem_url, preco) VALUES
-('Clube da Esquina', 'Milton Nascimento e Lô Borges', 'MPB', 'https://upload.wikimedia.org/wikipedia/pt/2/23/Clube_da_Esquina.jpg', 180.00),
+('Clube da Esquina', 'Milton Nascimento e Lô Borges', 'MPB', 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRc_R_qvq2TMxFDM2E2KRwRfA6jvS3wYrTdW9jeAt8g1A&s=10', 180.00),
 ('The Dark Side of the Moon', 'Pink Floyd', 'Rock Progressivo', 'https://upload.wikimedia.org/wikipedia/pt/3/3b/Dark_Side_of_the_Moon.png', 220.50),
-('Da Lama ao Caos', 'Chico Science & Nação Zumbi', 'Manguebeat', 'https://upload.wikimedia.org/wikipedia/pt/4/4a/Da_Lama_ao_Caos.jpg', 150.00);
+('Da Lama ao Caos', 'Chico Science & Nação Zumbi', 'Manguebeat', 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ5_7YPJd2fND_i92linr5KwBLGh5lecT3xWGejRGBP_g&s=10', 150.00),
+('Slave Bird', 'Super Solid Disc', 'Rock', 'https://bl-prod-images.azureedge.net/v1.3/songs/f102dc80-ba61-4bd6-9a4d-93d9cf648a1c/400x400', 10.00);

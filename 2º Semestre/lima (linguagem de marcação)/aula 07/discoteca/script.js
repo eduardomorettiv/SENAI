@@ -7,6 +7,8 @@ const form = document.getElementById("formDisco")
 const lista = document.getElementById("listarDiscos")
 const mensagemVazia = document.getElementById("mensagemVazia")
 
+let idEditando = null
+
 btnCadastrar.addEventListener("click", ()=>{
     modal.showModal()
 })
@@ -14,7 +16,10 @@ btnCadastrar.addEventListener("click", ()=>{
 btnCancelar.addEventListener("click", ()=>{
     modal.close()
 })
-
+modal.addEventListener("close",()=>{
+    idEditando = null
+    form.reset()
+})
 // Carregar os discos do DB(GET)
 async function carregarDiscos(){
     try{
@@ -28,28 +33,36 @@ async function carregarDiscos(){
             lista.appendChild(mensagemVazia)
             return
         }
-
         mensagemVazia.hidden = true
-        // Renderize os discos encontrados
+        // Renderizar
         discos.forEach(disco => {
-            criarCard(disco.album, disco.artista, disco.genero, disco.imagem, disco.preco)
+            criarCard(disco.album, disco.artista, disco.genero, disco.imagem, disco.preco, disco.id)
         })
     }catch (erro){
         console.error("Erro ao carregar discos: ", erro)
-        alert("Não foi possível conectar ao servidor")  
+        alert("Não foi possível conectar ao servidor")
     }
 }
 
+
+//Escolhe o que o submit vai fazer
 form.addEventListener("submit",async (evento)=>{
         evento.preventDefault()
+        if(idEditando){
+            await atualizarDisco(idEditando)
+        }else{
+            await CadastrarDisco()
+        }
+})
 
-
-    const novoDisco ={
-        album : document.getElementById("album").value.trim(),
-        artista : document.getElementById("artista").value.trim(),
-        genero : document.getElementById("genero").value.trim(),
-        imagem : document.getElementById("imagem").value.trim(),
-        preco : Number(document.getElementById("preco").value)
+//Cadastrar Disco (post)
+async function CadastrarDisco() {
+    const novoDisco = {
+        album: document.getElementById("album").value.trim(),
+        artista: document.getElementById("artista").value.trim(),
+        genero: document.getElementById("genero").value.trim(),
+        imagem: document.getElementById("imagem").value.trim(),
+        preco: Number(document.getElementById("preco").value)
     }
     try{
         const resposta = await fetch(API_URL + '/cadastrar',{
@@ -66,14 +79,60 @@ form.addEventListener("submit",async (evento)=>{
         }else{
             alert("Erro ao salvar discos. Verifique DB")
         }
-    }catch{
+    }catch (erro){
         console.error("Erro na requisição: ", erro)
         alert("Erro de conexão com o servidor")
     }
-})
 
-function criarCard(album, artista, genero, imagem, preco){
+}
 
+//Atualizar (PUT)
+async function atualizarDisco(id) {
+    const discoAtualizado = {
+        album: document.getElementById("album").value.trim(),
+        artista: document.getElementById("artista").value.trim(),
+        genero: document.getElementById("genero").value.trim(),
+        imagem: document.getElementById("imagem").value.trim(),
+        preco: Number(document.getElementById("preco").value)
+    }
+    try{
+        const resposta = await fetch(API_URL + '/atualizar/'+ id,{
+            method:"PUT",
+            headers:{
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify(discoAtualizado)
+        })
+        if(resposta.ok){
+            modal.close()
+            carregarDiscos()
+        }else {
+            alert("Erro ao atualizar disco. Verificar BD")
+        }
+    }catch (erro){
+        console.error("Erro na requisição:", erro)
+        alert("Erro de conexão com o servidor")
+    }
+}
+//Deletar (delete)
+async function deletarDisco(id) {
+    try{
+        const resposta = await fetch(API_URL + '/deletar/' + id,{
+            method:"DELETE",
+        })
+        if(resposta.ok){
+            carregarDiscos()
+        }else{
+            alert("Erro ao deletar disco")
+        }
+    }catch (erro){
+        console.error("Erro na requisição:", erro)
+        alert("Erro de conexão com o servidor")
+    }
+
+}
+
+function criarCard(album, artista, genero, imagem, preco, id){
     const card = document.createElement("article")
     card.classList.add("card-disco")
 
@@ -99,7 +158,32 @@ function criarCard(album, artista, genero, imagem, preco){
     const valor = document.createElement("strong")
     valor.classList.add("preco")
     valor.textContent = preco.toLocaleString("pt-BR", {style:"currency", currency:"BRL"})
-   
+    //Botões para editar e excluir
+    const acoesCard = document.createElement("div")
+    acoesCard.classList.add("acoes-card")
+
+    //Editar
+    const btnEditar = document.createElement("button")
+    btnEditar.type = "button"
+    btnEditar.classList.add("btn-editar")
+    btnEditar.textContent = "Editar"
+    //Função ao clicar
+    btnEditar.addEventListener("click",() => {
+        idEditando = id
+        document.getElementById("album").value = album
+        document.getElementById("artista").value = artista
+        document.getElementById("genero").value = genero
+        document.getElementById("imagem").value = imagem
+        document.getElementById("preco").value = preco
+        modal.showModal()
+    })
+    const btnExcluir = document.createElement("button")
+    btnExcluir.type = "button"
+    btnExcluir.classList.add("btn-excluir")
+    btnExcluir.textContent = "Excluir"
+    btnExcluir.addEventListener("click",()=>deletarDisco(id))
+
+    acoesCard.append(btnEditar, btnExcluir)
     info.append(titulo, nomeArtista,nomeGenero,valor)
     card.append(capa,info)
     lista.append(card)

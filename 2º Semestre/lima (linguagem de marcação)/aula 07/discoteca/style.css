@@ -6,7 +6,7 @@
 
 body {
     font-family: Arial, sans-serif;
-    background-color: #f5f1e8;
+    background-color: #fff;
     color: #252525;
 }
 
@@ -117,7 +117,7 @@ button:hover {
 }
 
 dialog {
-    width: min(90%), 420px;
+    width: 420px;
     margin: auto;
     padding: 25px;
     border: none;
@@ -168,4 +168,23 @@ button.cancelar:hover {
     height: 100%;
     object-fit: cover;
     display: block;
+}
+
+.acoes-card {
+    display: flex;
+    gap: 8px;
+    margin-top: 14px;
+}
+
+.acoes-card button {
+    flex: 1;
+    padding: 8px 10px;
+}
+
+button.btn-editar {
+    background: #201c1a;
+}
+
+button.btn-excluir {
+    background: #c0392b;
 }
