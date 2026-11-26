@@ -1,62 +1,62 @@
 const API_URL = "http://localhost:3000"
 
-const btnCadastrar = document.getElementById("btnCadastrar")
-const btnCancelar = document.getElementById("btnCancelar")
-const modal = document.getElementById("modalCadastro")
-const form = document.getElementById("formDisco")
-const lista = document.getElementById("listarDiscos")
-const mensagemVazia = document.getElementById("mensagemVazia")
+const btnCadastrar = document.getElementById('btnCadastrar')
+const btnCancelar = document.getElementById('btnCancelar')
+const modal = document.getElementById('modalCadastro')
+const form = document.getElementById('formDisco')
+const lista = document.getElementById('listarDiscos')
+const mensagemVazia = document.getElementById('mensagemVazia')
 
 let idEditando = null
 
-btnCadastrar.addEventListener("click", ()=>{
-    modal.showModal()
+btnCadastrar.addEventListener("click", () => {
+    modal.showModal();
 })
 
-btnCancelar.addEventListener("click", ()=>{
-    modal.close()
+btnCancelar.addEventListener("click", () => {
+    modal.close();
 })
 modal.addEventListener("close",()=>{
     idEditando = null
     form.reset()
 })
-// Carregar os discos do DB(GET)
-async function carregarDiscos(){
-    try{
+//Carregando as informações do BD (GET)
+async function carregarDiscos() {
+    try {
         const resposta = await fetch(API_URL + '/listar')
         const discos = await resposta.json()
-       
-        lista.innerHTML=""
 
-        if(discos.length == 0){
-            mensagemVazia.hidden=false
+        lista.innerHTML = ""
+
+        if (discos.length === 0) {
+            mensagemVazia.hidden = false
             lista.appendChild(mensagemVazia)
             return
         }
         mensagemVazia.hidden = true
-        // Renderizar
+        //Renderizar
         discos.forEach(disco => {
-            criarCard(disco.album, disco.artista, disco.genero, disco.imagem, disco.preco, disco.id)
+            criarCard(disco.album, disco.artista, disco.genero, disco.imagem_url, disco.preco, disco.id)
         })
-    }catch (erro){
-        console.error("Erro ao carregar discos: ", erro)
-        alert("Não foi possível conectar ao servidor")
+    } catch (erro) {
+        console.error("Erro ao carregar discos:", erro)
+        alert("Não foi possivel conectar ao servidor")
     }
 }
 
 
 //Escolhe o que o submit vai fazer
-form.addEventListener("submit",async (evento)=>{
-        evento.preventDefault()
-        if(idEditando){
-            await atualizarDisco(idEditando)
-        }else{
-            await CadastrarDisco()
-        }
+form.addEventListener("submit", async (evento) => {
+    evento.preventDefault()
+    if(idEditando){
+        await atualizarDisco(idEditando)
+    }else{
+        await cadastrarDisco()
+    }
 })
 
-//Cadastrar Disco (post)
-async function CadastrarDisco() {
+//Cadastrar novo disco (post)
+async function cadastrarDisco() {
     const novoDisco = {
         album: document.getElementById("album").value.trim(),
         artista: document.getElementById("artista").value.trim(),
@@ -64,29 +64,27 @@ async function CadastrarDisco() {
         imagem: document.getElementById("imagem").value.trim(),
         preco: Number(document.getElementById("preco").value)
     }
-    try{
-        const resposta = await fetch(API_URL + '/cadastrar',{
+    try {
+        const resposta = await fetch(API_URL + '/cadastrar', {
             method: "POST",
             headers: {
                 "Content-Type": "application/json"
             },
             body: JSON.stringify(novoDisco)
         })
-        if(resposta.ok){
-            form.reset()
+        if (resposta.ok) {
             modal.close()
             carregarDiscos()
         }else{
-            alert("Erro ao salvar discos. Verifique DB")
+            alert("Erro ao salvar disco. Verificar database")
         }
     }catch (erro){
-        console.error("Erro na requisição: ", erro)
+        console.error("Erro na requisição:", erro)
         alert("Erro de conexão com o servidor")
     }
-
+  
 }
 
-//Atualizar (PUT)
 async function atualizarDisco(id) {
     const discoAtualizado = {
         album: document.getElementById("album").value.trim(),
@@ -98,7 +96,7 @@ async function atualizarDisco(id) {
     try{
         const resposta = await fetch(API_URL + '/atualizar/'+ id,{
             method:"PUT",
-            headers:{
+            headers: {
                 "Content-Type": "application/json"
             },
             body: JSON.stringify(discoAtualizado)
@@ -114,11 +112,11 @@ async function atualizarDisco(id) {
         alert("Erro de conexão com o servidor")
     }
 }
-//Deletar (delete)
+
 async function deletarDisco(id) {
     try{
         const resposta = await fetch(API_URL + '/deletar/' + id,{
-            method:"DELETE",
+            method:"DELETE"
         })
         if(resposta.ok){
             carregarDiscos()
@@ -126,11 +124,13 @@ async function deletarDisco(id) {
             alert("Erro ao deletar disco")
         }
     }catch (erro){
-        console.error("Erro na requisição:", erro)
+        console.error("Erro na requisição:",erro)
         alert("Erro de conexão com o servidor")
     }
-
+    
 }
+
+
 
 function criarCard(album, artista, genero, imagem, preco, id){
     const card = document.createElement("article")
@@ -145,7 +145,7 @@ function criarCard(album, artista, genero, imagem, preco, id){
 
     const info = document.createElement("div")
     info.classList.add("info-disco")
-   
+
     const titulo = document.createElement("h3")
     titulo.textContent = album
 
@@ -153,15 +153,15 @@ function criarCard(album, artista, genero, imagem, preco, id){
     nomeArtista.textContent = "Artista: " + artista
 
     const nomeGenero = document.createElement("p")
-    nomeGenero.textContent = "Gênero: " + genero
-   
+    nomeGenero.textContent = "Gênero: " + genero;
+
     const valor = document.createElement("strong")
     valor.classList.add("preco")
-    valor.textContent = preco.toLocaleString("pt-BR", {style:"currency", currency:"BRL"})
+    valor.textContent = preco.toLocaleString("pt-BR",{style: "currency",currency:"BRL"})
     //Botões para editar e excluir
     const acoesCard = document.createElement("div")
     acoesCard.classList.add("acoes-card")
-
+    
     //Editar
     const btnEditar = document.createElement("button")
     btnEditar.type = "button"
@@ -170,22 +170,23 @@ function criarCard(album, artista, genero, imagem, preco, id){
     //Função ao clicar
     btnEditar.addEventListener("click",() => {
         idEditando = id
-        document.getElementById("album").value = album
+        document.getElementById("album").value = album 
         document.getElementById("artista").value = artista
         document.getElementById("genero").value = genero
         document.getElementById("imagem").value = imagem
         document.getElementById("preco").value = preco
         modal.showModal()
-    })
+    }) 
     const btnExcluir = document.createElement("button")
     btnExcluir.type = "button"
     btnExcluir.classList.add("btn-excluir")
     btnExcluir.textContent = "Excluir"
     btnExcluir.addEventListener("click",()=>deletarDisco(id))
-
     acoesCard.append(btnEditar, btnExcluir)
-    info.append(titulo, nomeArtista,nomeGenero,valor)
-    card.append(capa,info)
+    info.append(titulo, nomeArtista, nomeGenero, valor,acoesCard)
+    card.append(capa, info)
     lista.append(card)
+
+
 }
 carregarDiscos()
